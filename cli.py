@@ -46,3 +46,9 @@ class CLI:
 
                 self.connect(firstmessage, self.m1_ip, self.m1_port);
                 self.connect(secondmessage, self.m2_ip, self.m2_port)
+
+        if command[0] == "reduce":
+            if len(command) < 3:
+                print 'minimum 3 arguments required'
+            else:
+                self.connect(" ".join(command), self.r_ip, self.r_port)

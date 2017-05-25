@@ -57,10 +57,11 @@ def createMapperTwo():
     mapperTwo.log('Exiting');
 
 def createReducer():
-    reducer = Reducer(5003);
+    reducer = Reducer(5003, "127.0.0.1");
     reducer.log('Starting Up');
     # execution code goes here
 
+    reducer.listen()
     # exiting
     reducer.log('Exiting');
 

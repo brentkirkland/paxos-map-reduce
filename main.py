@@ -34,7 +34,7 @@ def createMapperOne():
     mapperOne.log('Starting Up');
     # execution code goes here
 
-    mapperOne.map('test/second.txt', 0, 0)
+    mapperOne.map('test/first.txt', 0, 0)
 
     # exiting
     mapperOne.log('Exiting');
@@ -43,6 +43,8 @@ def createMapperTwo():
     mapperTwo = Mapper(5002, "127.0.0.1", 2);
     mapperTwo.log('Starting Up');
     # execution code goes here
+
+    mapperTwo.map('test/second.txt', 0, 0)
 
     # exiting
     mapperTwo.log('Exiting');

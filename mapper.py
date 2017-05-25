@@ -2,8 +2,9 @@ import collections
 import string
 
 class Mapper:
-    def __init__(self, port):
+    def __init__(self, port, ip):
         self.port = port;
+        self.ip = ip;
 
     def log(self, text):
         print 'MAPPER\t(' + str(self.port) + '):\t' + text;

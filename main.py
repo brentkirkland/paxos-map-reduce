@@ -30,7 +30,7 @@ def createCLI():
     cli.log('Exiting');
 
 def createMapperOne():
-    mapperOne = Mapper(5001);
+    mapperOne = Mapper(5001, "127.0.0.1");
     mapperOne.log('Starting Up - (1)');
     # execution code goes here
 
@@ -40,7 +40,7 @@ def createMapperOne():
     mapperOne.log('Exiting - (1)');
 
 def createMapperTwo():
-    mapperTwo = Mapper(5002);
+    mapperTwo = Mapper(5002, "127.0.0.1");
     mapperTwo.log('Starting Up - (2)');
     # execution code goes here
 

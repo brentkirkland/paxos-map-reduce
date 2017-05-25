@@ -7,20 +7,15 @@ import time
 def createCLI():
     cli = CLI();
     cli.log('Starting Up');
-    # execution code goes here
 
     # this maps the CLI looks pretty
-    time.sleep(1)
-    cli.log('Loading 5...')
-    time.sleep(1)
-    cli.log('Loading 4...')
-    time.sleep(1)
-    cli.log('Loading 3...')
-    time.sleep(1)
-    cli.log('Loading 2...')
-    time.sleep(1)
-    cli.log('Loading 1...')
-    time.sleep(1)
+    time.sleep(1);
+    cli.log('Loading 3...');
+    time.sleep(1);
+    cli.log('Loading 2...');
+    time.sleep(1);
+    cli.log('Loading 1...');
+    time.sleep(1);
 
     cli.log('Enter commands below. Use ctrl+c to exit.')
     boo = True
@@ -60,15 +55,13 @@ def createReducer():
 
 
 def createProcesses():
-    # p1 = Process(target=createCLI);
     p2 = Process(target=createMapperOne);
     p3 = Process(target=createMapperTwo);
     p4 = Process(target=createReducer);
 
-    # p1.start()
-    p2.start()
-    p3.start()
-    p4.start()
+    p2.start();
+    p3.start();
+    p4.start();
 
     createCLI();
 

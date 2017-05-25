@@ -34,6 +34,8 @@ def createMapperOne():
     mapperOne.log('Starting Up - (1)');
     # execution code goes here
 
+    mapperOne.map('test/first.txt', 0, 0)
+
     # exiting
     mapperOne.log('Exiting - (1)');
 

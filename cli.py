@@ -1,13 +1,48 @@
+import socket
+import os
+
 class CLI:
     def __init__(self):
         return
 
     def log(self, text):
-        print 'CLI:\t' + text;
+        print 'CLI:\t' + str(text);
+
+    def defineMapperOne(self, port, ip):
+        self.m1_port = port;
+        self.m1_ip = ip;
+
+    def defineMapperTwo(self, port, ip):
+        self.m2_port = port;
+        self.m2_ip = ip;
+
+    def defineReducer(self, port, ip):
+        self.r_port = port;
+        self.r_ip = ip;
+
+    def connect(self, message, ip, port):
+        sendSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sendSocket.connect((ip, port))
+        sendSocket.send(str(message));
+        sendSocket.close();
 
     def handleCommand(self, command):
         if command[0] == "map":
-            if len(command) != 3:
-                print 'Missing arguments'
+            if len(command) != 2:
+                print '2 arguments required.'
             else:
-                print "I'm a mapper mofo"
+
+                with open(command[1]) as f:
+                    content = f.read()
+                content = [x.strip() for x in content]
+
+                middle = int(len(content)/2)
+
+                while(content[middle] != ' ' and content[middle] != ''):
+                    middle -= 1;
+
+                firstmessage = "map " + command[1] + " 0 " + str(middle)
+                secondmessage = "map " + command[1] + " " + str(middle + 1) + " " + str(len(content) - middle - 1)
+
+                self.connect(firstmessage, self.m1_ip, self.m1_port);
+                self.connect(secondmessage, self.m2_ip, self.m2_port)

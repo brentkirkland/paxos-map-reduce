@@ -17,6 +17,11 @@ def createCLI():
     cli.log('Loading 1...');
     time.sleep(1);
 
+    # pass details
+    cli.defineMapperOne(5001, "127.0.0.1");
+    cli.defineMapperTwo(5002, "127.0.0.1");
+    cli.defineReducer(5003, "127.0.0.1");
+
     cli.log('Enter commands below. Use ctrl+c to exit.')
     boo = True
     while (boo):
@@ -34,7 +39,8 @@ def createMapperOne():
     mapperOne.log('Starting Up');
     # execution code goes here
 
-    mapperOne.map('test/first.txt', 0, 0)
+    # mapperOne.map('test/first.txt', 0, 0)
+    mapperOne.listen()
 
     # exiting
     mapperOne.log('Exiting');
@@ -44,7 +50,8 @@ def createMapperTwo():
     mapperTwo.log('Starting Up');
     # execution code goes here
 
-    mapperTwo.map('test/second.txt', 0, 0)
+    # mapperTwo.map('test/second.txt', 0, 0)
+    mapperTwo.listen()
 
     # exiting
     mapperTwo.log('Exiting');

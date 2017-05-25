@@ -1,1 +1,1 @@
-{'last': 1, 'name': 3, 'is': 3, 'meier': 1, 'second': 1, 'my': 3, 'ishi': 2, 'von': 1, 'first': 1}
+{'last': 1, 'name': 2, 'is': 2, 'my': 1, 'ishi': 1, 'von': 1, 'meier': 1}

@@ -1,6 +1,7 @@
 from cli import CLI
 from mapper import Mapper
 from reducer import Reducer
+from prm import PRM
 from multiprocessing import Process
 import time
 
@@ -42,9 +43,8 @@ class Main:
     def createMapperOne(self):
         mapperOne = Mapper(5001 + (self.num-1)*10, "127.0.0.1", 1);
         mapperOne.log('Starting Up');
-        # execution code goes here
 
-        # mapperOne.map('test/first.txt', 0, 0)
+        # execution code goes here
         mapperOne.listen()
 
         # exiting
@@ -53,9 +53,8 @@ class Main:
     def createMapperTwo(self):
         mapperTwo = Mapper(5002 + (self.num-1)*10, "127.0.0.1", 2);
         mapperTwo.log('Starting Up');
-        # execution code goes here
 
-        # mapperTwo.map('test/second.txt', 0, 0)
+        # execution code goes here
         mapperTwo.listen()
 
         # exiting
@@ -64,18 +63,31 @@ class Main:
     def createReducer(self):
         reducer = Reducer(5003 + (self.num-1)*10, "127.0.0.1");
         reducer.log('Starting Up');
-        # execution code goes here
 
+        # execution code goes here
         reducer.listen()
+
         # exiting
         reducer.log('Exiting');
 
+    def createPRM(self):
+        prm = PRM(5004 + (self.num-1)*10, "127.0.0.1", self.num);
+        prm.log('Starting Up');
+
+        # execution code goes here
+        prm.createFlavors()
+
+        # exiting
+        prm.log('Exiting');
+
 
     def createProcesses(self):
-        p2 = Process(target=self.createMapperOne);
-        p3 = Process(target=self.createMapperTwo);
-        p4 = Process(target=self.createReducer);
+        p1 = Process(target=self.createMapperOne);
+        p2 = Process(target=self.createMapperTwo);
+        p3 = Process(target=self.createReducer);
+        p4 = Process(target=self.createPRM);
 
+        p1.start();
         p2.start();
         p3.start();
         p4.start();

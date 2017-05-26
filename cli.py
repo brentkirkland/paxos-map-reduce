@@ -20,6 +20,10 @@ class CLI:
         self.r_port = port;
         self.r_ip = ip;
 
+    def definePRM(self, port, ip):
+        self.prm_port = port;
+        self.prm_ip = ip;
+
     def connect(self, message, ip, port):
         sendSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sendSocket.connect((ip, port))
@@ -29,7 +33,7 @@ class CLI:
     def handleCommand(self, command):
         if command[0] == "map":
             if len(command) != 2:
-                print '2 arguments required.'
+                print 'argument required.'
             else:
 
                 with open(command[1]) as f:
@@ -49,6 +53,13 @@ class CLI:
 
         if command[0] == "reduce":
             if len(command) < 3:
-                print 'minimum 3 arguments required'
+                print 'minimum 2 arguments required'
             else:
                 self.connect(" ".join(command), self.r_ip, self.r_port)
+
+        if command[0] == "replicate":
+            if len(command) != 2:
+                print 'argument required'
+            else:
+                self.log(command);
+                self.connect(" ".join(command), self.prm_ip, self.prm_port)

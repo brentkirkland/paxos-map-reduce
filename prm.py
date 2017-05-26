@@ -18,17 +18,23 @@ class PRM:
         proposer = Proposer(self.port, self.ip, self.num);
         proposer.log('starting');
 
+        proposer.listen();
+
         proposer.log('exiting');
 
     def createAcceptor(self):
         acceptor = Acceptor(self.port+1, self.ip, self.num);
         acceptor.log('starting');
 
+        acceptor.listen();
+
         acceptor.log('exiting');
 
     def createLearner(self):
         learner = Learner(self.port+2, self.ip, self.num);
         learner.log('starting');
+
+        learner.listen();
 
         learner.log('exiting');
 
@@ -40,24 +46,3 @@ class PRM:
         p1.start();
         p2.start();
         p3.start();
-
-
-    # def listen(self):
-    #     sock = socket.socket(socket.AF_INET,
-    #     socket.SOCK_STREAM)
-    #     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    #     sock.bind((self.ip, self.port))
-    #     sock.listen(10)
-    #     while 1:
-    #         self.log('waiting to accept')
-    #         stream, addr = sock.accept();
-    #         data = stream.recv(1024);
-    #         self.log('recieved: ' + str(data))
-    #
-    #         command = data.split();
-    #
-    #         self.log(command);
-    #
-    #         stream.close();
-    #
-    #     sock.close();

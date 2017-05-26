@@ -24,9 +24,10 @@ class Main:
         time.sleep(1);
 
         # pass details
-        cli.defineMapperOne(5001, "127.0.0.1");
-        cli.defineMapperTwo(5002, "127.0.0.1");
-        cli.defineReducer(5003, "127.0.0.1");
+        cli.defineMapperOne(5001 + (self.num-1)*10, "127.0.0.1");
+        cli.defineMapperTwo(5002 + (self.num-1)*10, "127.0.0.1");
+        cli.defineReducer(5003 + (self.num-1)*10, "127.0.0.1");
+        cli.definePRM(5004 + (self.num-1)*10, "127.0.0.1");
 
         cli.log('Enter commands below. Use ctrl+c to exit.')
         boo = True

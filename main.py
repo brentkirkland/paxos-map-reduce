@@ -11,7 +11,8 @@ class Main:
         self.num = int(num)
 
     def createCLI(self):
-        cli = CLI();
+        cli = CLI(self.num);
+        # cli.logging(False)
         cli.log('Starting Up');
 
         # this maps the CLI looks pretty
@@ -37,12 +38,14 @@ class Main:
                 cli.handleCommand(command.split());
             except KeyboardInterrupt:
                 boo = False;
+            time.sleep(1);
 
         # exiting
         cli.log('Exiting');
 
     def createMapperOne(self):
         mapperOne = Mapper(5001 + (self.num-1)*10, "127.0.0.1", 1);
+        mapperOne.logging(False)
         mapperOne.log('Starting Up');
 
         # execution code goes here
@@ -53,6 +56,7 @@ class Main:
 
     def createMapperTwo(self):
         mapperTwo = Mapper(5002 + (self.num-1)*10, "127.0.0.1", 2);
+        mapperTwo.logging(False)
         mapperTwo.log('Starting Up');
 
         # execution code goes here
@@ -63,6 +67,7 @@ class Main:
 
     def createReducer(self):
         reducer = Reducer(5003 + (self.num-1)*10, "127.0.0.1");
+        reducer.logging(False)
         reducer.log('Starting Up');
 
         # execution code goes here
@@ -73,6 +78,7 @@ class Main:
 
     def createPRM(self):
         prm = PRM(5004 + (self.num-1)*10, "127.0.0.1", self.num);
+        prm.logging(False)
         prm.log('Starting Up');
 
         # execution code goes here

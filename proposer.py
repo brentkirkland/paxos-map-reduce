@@ -8,9 +8,14 @@ class Proposer:
         self.n = 0;
         self.q = []
         self.v = []
+        self.logging_switch = True
+
+    def logging(self, switch):
+        self.logging_switch = switch
 
     def log(self, text):
-        print 'PROPOSER (' + str(self.pid) + ')\t(' + str(self.port) + '):\t' + text;
+        if self.logging_switch:
+            print 'PROPOSER (' + str(self.pid) + ')\t(' + str(self.port) + '):\t' + text;
 
     def connect(self, message, ip, port):
         sendSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -34,6 +39,8 @@ class Proposer:
 
             if command[0] == "replicate":
                 fname = command[1];
+                self.v = [];
+                self.q = [];
                 self.sendProposal(fname);
             else:
                 command = data.split("$$$eth$$$");
@@ -54,7 +61,12 @@ class Proposer:
         for x in range(0, 3):
             self.connect(message, self.ip, 5005 + (x)*10)
 
+    def sendAccept(self, message):
+        for x in range(0, 3):
+            self.connect(message, self.ip, 5005 + (x)*10)
+
     def handleMajority(self, command):
+
         self.log(str(command))
         self.q.append(tuple(command[2]));
         self.v.append(command[3]);
@@ -62,7 +74,7 @@ class Proposer:
         #TODO: figure out what the accept_num is needed for!
         #TODO: this will be some bug
         allNone = True
-        if len(self.q) == 3:
+        if len(self.q) == 2:
             self.log('recieved all three!')
             for x in self.v:
                 self.log('X: ' + str(x))
@@ -78,12 +90,23 @@ class Proposer:
                     'contents': text
                 }
 
+                myVal = value;
+
                 self.log(str(value))
 
             else:
                 maxx = max(self.q)
                 indi = self.q.index(maxx)
                 myVal = self.v[indi]
+
+            delimiter = "$$$eth$$$"
+            message = "accept" + delimiter + str(command[1]) + delimiter + str(myVal)
+
+            self.sendAccept(message)
+
+            self.v = [];
+            self.q = [];
+
 
             # send commands!
 

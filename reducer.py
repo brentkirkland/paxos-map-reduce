@@ -10,9 +10,14 @@ class Reducer:
         self.port = port;
         self.ip = ip
         self.orig_filename = "f"
+        self.logging_switch = True
+
+    def logging(self, switch):
+        self.logging_switch = switch
 
     def log(self, text):
-        print 'REDUCER\t(' + str(self.port) + '):\t' + text;
+        if self.logging_switch:
+            print 'REDUCER\t(' + str(self.port) + '):\t' + text;
 
     def listen(self):
         sock = socket.socket(socket.AF_INET,

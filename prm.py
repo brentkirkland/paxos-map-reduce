@@ -10,12 +10,19 @@ class PRM:
         self.port = int(port);
         self.ip = ip;
         self.num = int(num);
+        self.logging_switch = True
+
+    def logging(self, switch):
+        self.logging_switch = switch
 
     def log(self, text):
-        print 'PRM (' + str(self.num) + ')\t(' + str(self.port) + '):\t' + text;
+        if self.logging_switch:
+            print 'PRM (' + str(self.num) + ')\t(' + str(self.port) + '):\t' + text;
 
     def createProposer(self):
         proposer = Proposer(self.port, self.ip, self.num);
+        if not self.logging_switch:
+            proposer.logging(False)
         proposer.log('starting');
 
         proposer.listen();
@@ -24,6 +31,8 @@ class PRM:
 
     def createAcceptor(self):
         acceptor = Acceptor(self.port+1, self.ip, self.num);
+        if not self.logging_switch:
+            acceptor.logging(False)
         acceptor.log('starting');
 
         acceptor.listen();
@@ -32,6 +41,8 @@ class PRM:
 
     def createLearner(self):
         learner = Learner(self.port+2, self.ip, self.num);
+        if not self.logging_switch:
+            learner.logging(False)
         learner.log('starting');
 
         learner.listen();

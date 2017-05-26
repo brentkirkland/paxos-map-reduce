@@ -8,9 +8,14 @@ class Mapper:
         self.port = port;
         self.ip = ip;
         self.mid = mid;
+        self.logging_switch = True
+
+    def logging(self, switch):
+        self.logging_switch = switch
 
     def log(self, text):
-        print 'MAPPER\t(' + str(self.port) + '):\t' + text + ' - ' + str(self.mid);
+        if self.logging_switch:
+            print 'MAPPER\t(' + str(self.port) + '):\t' + text + ' - ' + str(self.mid);
 
     def listen(self):
         sock = socket.socket(socket.AF_INET,

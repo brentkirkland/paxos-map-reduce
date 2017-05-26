@@ -2,11 +2,16 @@ import socket
 import os
 
 class CLI:
-    def __init__(self):
-        return
+    def __init__(self, pid):
+        self.pid = pid
+        self.logging_switch = True
+
+    def logging(self, switch):
+        self.logging_switch = switch
 
     def log(self, text):
-        print 'CLI:\t' + str(text);
+        if self.logging_switch:
+            print 'CLI:\t' + str(text);
 
     def defineMapperOne(self, port, ip):
         self.m1_port = port;
@@ -55,11 +60,34 @@ class CLI:
             if len(command) < 3:
                 print 'minimum 2 arguments required'
             else:
+                self.log('reducing...')
                 self.connect(" ".join(command), self.r_ip, self.r_port)
 
         if command[0] == "replicate":
             if len(command) != 2:
                 print 'argument required'
             else:
-                self.log(command);
+                self.log('replicating...')
                 self.connect(" ".join(command), self.prm_ip, self.prm_port)
+
+        if command[0] == "total":
+            if len(command) < 3:
+                print 'minimum 2 arguments required'
+            else:
+                self.log('totaling...')
+
+        if command[0] == "print":
+            self.connect(" ".join(command), self.prm_ip, self.prm_port + 2)
+
+        if command[0] == "merge":
+            if len(command) != 3:
+                print '2 arguments required'
+            else:
+                self.log('merging...')
+
+
+        if command[0] == "stop":
+            self.log('stopping...')
+
+        if command[0] == "resume":
+            self.log('resuming...')

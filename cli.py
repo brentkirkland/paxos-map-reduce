@@ -75,6 +75,7 @@ class CLI:
                 print 'minimum 2 arguments required'
             else:
                 self.log('totaling...')
+                self.connect(" ".join(command), self.prm_ip, self.prm_port + 2)
 
         if command[0] == "print":
             self.connect(" ".join(command), self.prm_ip, self.prm_port + 2)
@@ -84,10 +85,20 @@ class CLI:
                 print '2 arguments required'
             else:
                 self.log('merging...')
+                self.connect(" ".join(command), self.prm_ip, self.prm_port + 2)
 
 
         if command[0] == "stop":
             self.log('stopping...')
 
+            # TODO: // FIX FOR MULTIPLE NODES / GOOGLE
+            self.connect("stop", self.prm_ip, self.prm_port)
+            self.connect("stop", self.prm_ip, self.prm_port + 1)
+            self.connect("stop", self.prm_ip, self.prm_port + 2)
+
         if command[0] == "resume":
             self.log('resuming...')
+
+            self.connect("resume", self.prm_ip, self.prm_port)
+            self.connect("resume", self.prm_ip, self.prm_port + 1)
+            self.connect("resume", self.prm_ip, self.prm_port + 2)

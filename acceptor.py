@@ -9,6 +9,7 @@ class Acceptor:
         self.accept_num = (0,0);
         self.accept_val = None;
         self.logging_switch = True
+        self.stopped = False
 
     def logging(self, switch):
         self.logging_switch = switch
@@ -37,17 +38,23 @@ class Acceptor:
 
             command = data.split();
 
-            if command[0] == "prepare":
-                self.accept((int(command[1]), int(command[2])))
-            else:
-                c = data.split("$$$eth$$$")
-                if c[0] == "accept":
-                    self.log('accepted: ' + data)
-                    self.update(c[1], c[2], data)
-                if c[0] == "reset":
-                    self.log('reset')
-                    self.accept_num = (0,0);
-                    self.accept_val = None;
+            if not self.stopped:
+                if command[0] == "stop":
+                    self.stopped = True
+                elif command[0] == "prepare":
+                    self.accept((int(command[1]), int(command[2])))
+                else:
+                    c = data.split("$$$eth$$$")
+                    if c[0] == "accept":
+                        self.log('accepted: ' + data)
+                        self.update(c[1], c[2], data)
+                    if c[0] == "reset":
+                        self.log('reset')
+                        self.accept_num = (0,0);
+                        self.accept_val = None;
+
+            if command[0] == "resume":
+                self.stopped = False
 
             stream.close();
 

@@ -9,6 +9,7 @@ class Proposer:
         self.q = []
         self.v = []
         self.logging_switch = True
+        self.stopped = False
 
     def logging(self, switch):
         self.logging_switch = switch
@@ -37,15 +38,21 @@ class Proposer:
 
             command = data.split();
 
-            if command[0] == "replicate":
-                fname = command[1];
-                self.v = [];
-                self.q = [];
-                self.sendProposal(fname);
-            else:
-                command = data.split("$$$eth$$$");
-                #self.log(str(command))
-                self.handleMajority(command)
+            if not self.stopped:
+                if command[0] == "stop":
+                    self.stopped = True
+                elif command[0] == "replicate":
+                    fname = command[1];
+                    self.v = [];
+                    self.q = [];
+                    self.sendProposal(fname);
+                else:
+                    command = data.split("$$$eth$$$");
+                    #self.log(str(command))
+                    self.handleMajority(command)
+
+            if command[0] == "resume":
+                self.stopped = False
 
             stream.close();
 

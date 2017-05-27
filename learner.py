@@ -1,5 +1,6 @@
 import socket
 import ast
+from collections import Counter
 
 class Learner:
     def __init__(self, port, ip, pid):
@@ -9,6 +10,7 @@ class Learner:
         self.d = {};
         self.my_log = [];
         self.logging_switch = True
+        self.stopped = False
 
     def logging(self, switch):
         self.logging_switch = switch
@@ -35,18 +37,32 @@ class Learner:
             data = stream.recv(1024);
             self.log('recieved: ' + str(data))
 
+
             command = data.split()
 
-            if command[0] == "print":
-                self.log("received print command")
-                self.print_logs()
+            if not self.stopped:
+                if command[0] == "print":
+                    self.log("received print command")
+                    self.print_logs()
+                elif command[0] == "total":
+                    self.total(command)
 
-            else:
-                delim = "$$$eth$$$"
-                c = data.split(delim)
+                elif command[0] == "merge":
+                    self.merge(command)
 
-                if c[0] == "accept":
-                    self.learn(c[1], c[2])
+                elif command[0] == "stop":
+                    self.stopped = True
+
+                else:
+                    delim = "$$$eth$$$"
+                    c = data.split(delim)
+
+                    if c[0] == "accept":
+                        self.learn(c[1], c[2])
+
+            if command[0] == "resume":
+                self.stopped = False
+
 
 
             stream.close();
@@ -88,3 +104,27 @@ class Learner:
         print "printing filenames:"
         for log in self.my_log:
             print log['filename']
+
+    def merge(self, commands):
+        str_contents_one = self.my_log[int(commands[1])]['contents']
+        str_contents_two = self.my_log[int(commands[2])]['contents']
+
+        c1 = Counter(ast.literal_eval(str_contents_one));
+        c2 = Counter(ast.literal_eval(str_contents_two));
+
+        c = c1 + c2;
+
+        print dict(c)
+
+
+    def total(self, commands):
+        b = Counter();
+        for x in range(1, len(commands)):
+            command = int(commands[x])
+            str_contents = self.my_log[command]['contents']
+            c = Counter(ast.literal_eval(str_contents));
+            b = b + c;
+
+        s = sum(b.values());
+
+        print 'Sum: ' + str(s)

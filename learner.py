@@ -67,6 +67,7 @@ class Learner:
             if command[0] == "catchup":
                 self.respond_to_catchup(command[1], command[2])
 
+            command = data.split("$$$eth$$$")
             if command[0] == "logupdate":
                 print "command 1: " + command[1]
                 self.finish_catchup(list(command[1]))
@@ -108,7 +109,7 @@ class Learner:
         ##(learners should be listening for this message, when they get it they respond with their log)
     def respond_to_catchup(self, ip, port):
         print "in respond to catchup"
-        catchup_response_msg = "logupdate " + str(self.my_log)
+        catchup_response_msg = "logupdate$$$eth$$$" + str(self.my_log)
         self.connect(catchup_response_msg, ip, int(port))
 
 

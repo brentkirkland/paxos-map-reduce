@@ -21,6 +21,8 @@ class Acceptor:
 
     def connect(self, message, ip, port):
         sendSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print "IP " + ip;
+        print "PORT " + str(port)
         sendSocket.connect((ip, port))
         sendSocket.send(str(message));
         sendSocket.close();

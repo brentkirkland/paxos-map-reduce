@@ -97,6 +97,7 @@ class Learner:
             self.d[b]['has_written'] = True
 
     def catchup(self):
+        print "in catchup"
         #ping all learners and ask for log
         catchup_msg = "catchup " + self.ip + " " + str(self.port)
 
@@ -105,6 +106,7 @@ class Learner:
 
         ##(learners should be listening for this message, when they get it they respond with their log)
     def respond_to_catchup(self, ip, port):
+        print "in respond to catchup"
         catchup_response_msg = "logupdate " + str(self.my_log)
         self.connect(catchup_response_msg, ip, int(port))
 

@@ -67,7 +67,7 @@ class Learner:
             if command[0] == "catchup":
                 self.respond_to_catchup(command[1], command[2])
 
-            if command[0] == "catchup_response_msg":
+            if command[0] == "logupdate":
                 self.finish_catchup(list(command[1]))
                 self.stopped = False
 

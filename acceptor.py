@@ -71,7 +71,7 @@ class Acceptor:
             n, p = n_pid_tuple;
 
             #TODO: FIX FOR GOOGLE
-            self.connect(message, self.ips[self.pid-1], 5004 + int(p-1)*10)
+            self.connect(message, self.ips[p-1], 5004 + int(p-1)*10)
 
     def update(self, b, value_str, data):
         tup_b = tuple(b)

@@ -105,7 +105,7 @@ class Learner:
         ##(learners should be listening for this message, when they get it they respond with their log)
     def respond_to_catchup(self, ip, port):
         catchup_response_msg = "logupdate " + str(self.my_log)
-        self.connect(catchup_response_msg, ip, port)
+        self.connect(catchup_response_msg, ip, int(port))
 
 
     def finish_catchup(self, log_arr):

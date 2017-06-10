@@ -10,6 +10,13 @@ class Main:
     def __init__(self, num):
         self.num = int(num)
 
+        f = open("config.txt", "r")
+        text = f.read()
+
+        self.ips = text.split()
+        self.ip = self.ips[self.num-1]
+
+
     def createCLI(self):
         cli = CLI(self.num);
         # cli.logging(False)
@@ -25,10 +32,10 @@ class Main:
         time.sleep(1);
 
         # pass details
-        cli.defineMapperOne(5001 + (self.num-1)*10, "127.0.0.1");
-        cli.defineMapperTwo(5002 + (self.num-1)*10, "127.0.0.1");
-        cli.defineReducer(5003 + (self.num-1)*10, "127.0.0.1");
-        cli.definePRM(5004 + (self.num-1)*10, "127.0.0.1");
+        cli.defineMapperOne(5001 + (self.num-1)*10, self.ip);
+        cli.defineMapperTwo(5002 + (self.num-1)*10, self.ip);
+        cli.defineReducer(5003 + (self.num-1)*10, self.ip);
+        cli.definePRM(5004 + (self.num-1)*10, self.ip);
 
         cli.log('Enter commands below. Use ctrl+c to exit.')
         boo = True
@@ -44,7 +51,7 @@ class Main:
         cli.log('Exiting');
 
     def createMapperOne(self):
-        mapperOne = Mapper(5001 + (self.num-1)*10, "127.0.0.1", 1);
+        mapperOne = Mapper(5001 + (self.num-1)*10, self.ip, 1);
         mapperOne.logging(False)
         mapperOne.log('Starting Up');
 
@@ -55,7 +62,7 @@ class Main:
         mapperOne.log('Exiting');
 
     def createMapperTwo(self):
-        mapperTwo = Mapper(5002 + (self.num-1)*10, "127.0.0.1", 2);
+        mapperTwo = Mapper(5002 + (self.num-1)*10, self.ip, 2);
         mapperTwo.logging(False)
         mapperTwo.log('Starting Up');
 
@@ -66,7 +73,7 @@ class Main:
         mapperTwo.log('Exiting');
 
     def createReducer(self):
-        reducer = Reducer(5003 + (self.num-1)*10, "127.0.0.1");
+        reducer = Reducer(5003 + (self.num-1)*10, self.ip);
         reducer.logging(False)
         reducer.log('Starting Up');
 
@@ -77,7 +84,7 @@ class Main:
         reducer.log('Exiting');
 
     def createPRM(self):
-        prm = PRM(5004 + (self.num-1)*10, "127.0.0.1", self.num);
+        prm = PRM(5004 + (self.num-1)*10, self.ips, self.ip, self.num);
         prm.logging(False)
         prm.log('Starting Up');
 

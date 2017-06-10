@@ -3,8 +3,9 @@ import ast
 from collections import Counter
 
 class Learner:
-    def __init__(self, port, ip, pid):
+    def __init__(self, port, ips, ip, pid):
         self.port = port;
+        self.ips = ips;
         self.ip = ip;
         self.pid = pid;
         self.d = {};

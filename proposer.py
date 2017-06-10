@@ -1,8 +1,9 @@
 import socket
 
 class Proposer:
-    def __init__(self, port, ip, pid):
+    def __init__(self, port, ips, ip, pid):
         self.port = port;
+        self.ips = ips;
         self.ip = ip;
         self.pid = pid;
         self.n = 0;
@@ -66,11 +67,11 @@ class Proposer:
 
         # TODO: FIX THIS FOR GOOGLE. NO HARDCODE
         for x in range(0, 3):
-            self.connect(message, self.ip, 5005 + (x)*10)
+            self.connect(message, self.ips[x], 5005 + (x)*10)
 
     def sendAccept(self, message):
         for x in range(0, 3):
-            self.connect(message, self.ip, 5005 + (x)*10)
+            self.connect(message, self.ips[x], 5005 + (x)*10)
 
     def handleMajority(self, command):
 
@@ -113,8 +114,3 @@ class Proposer:
 
             self.v = [];
             self.q = [];
-
-
-            # send commands!
-
-        #message = "ack" + delim + str(self.ballot_num) + delim + str(self.accept_num) + delim + str(self.accept_val)

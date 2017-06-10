@@ -1,8 +1,9 @@
 import socket
 
 class Acceptor:
-    def __init__(self, port, ip, pid):
+    def __init__(self, port, ips, ip, pid):
         self.port = port;
+        self.ips = ips;
         self.ip = ip;
         self.pid = pid;
         self.ballot_num = (0,0);
@@ -68,7 +69,7 @@ class Acceptor:
             n, p = n_pid_tuple;
 
             #TODO: FIX FOR GOOGLE
-            self.connect(message, self.ip, 5004 + int(p-1)*10)
+            self.connect(message, self.ips[self.pid-1], 5004 + int(p-1)*10)
 
     def update(self, b, value_str, data):
         tup_b = tuple(b)
@@ -79,4 +80,4 @@ class Acceptor:
 
             #TODO: FIX for googles
             for x in range(0, 3):
-                self.connect(data, self.ip, 5006 + (x)*10)
+                self.connect(data, self.ips[x], 5006 + (x)*10)

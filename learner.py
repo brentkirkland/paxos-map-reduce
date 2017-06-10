@@ -62,7 +62,14 @@ class Learner:
                         self.learn(c[1], c[2])
 
             if command[0] == "resume":
-                self.stopped = False
+                #self.stopped = False
+                self.catchup()
+            if command[0] == "catchup":
+                self.respond_to_catchup(command[1], command[2])
+
+            if command[0] == "catchup_response_msg":
+                self.finish_catchup(list(command[1]))
+
 
 
 
@@ -87,6 +94,26 @@ class Learner:
             self.writeToLog(value_str)
             self.connect("reset$$$eth$$$", self.ip, self.port - 1)
             self.d[b]['has_written'] = True
+
+    def catchup(self):
+        #ping all learners and ask for log
+        catchup_msg = "catchup " + self.ip + " " + str(self.port)
+
+        for x in range(0, 3):
+            self.connect(catchup_msg, self.ips[x], 5006 + (x)*10)
+
+        ##(learners should be listening for this message, when they get it they respond with their log)
+    def respond_to_catchup(self, ip, port):
+        catchup_response_msg = "logupdate " + str(self.my_log)
+        self.connect(catchup_response_msg, ip, port)
+
+
+    def finish_catchup(self, log_arr):
+        #once we hear back from a majority of learners
+        if len(log_arr) > len(self.my_log):
+            print "updated log from: " + str(self.my_log) + " to " + str(log_arr)
+            self.my_log = log_arr
+
 
     def writeToLog(self, value_str):
 

@@ -21,8 +21,6 @@ class Acceptor:
 
     def connect(self, message, ip, port):
         sendSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        print "IP " + ip;
-        print "PORT " + str(port)
         sendSocket.connect((ip, port))
         sendSocket.send(str(message));
         sendSocket.close();
@@ -70,7 +68,6 @@ class Acceptor:
             message = "ack" + delim + str(self.ballot_num) + delim + str(self.accept_num) + delim + str(self.accept_val)
             n, p = n_pid_tuple;
 
-            #TODO: FIX FOR GOOGLE
             self.connect(message, self.ips[p-1], 5004 + int(p-1)*10)
 
     def update(self, b, value_str, data):

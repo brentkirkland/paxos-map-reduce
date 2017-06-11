@@ -116,7 +116,7 @@ class Learner:
     def finish_catchup(self, log_arr):
         #once we hear back from a majority of learners
         print "got in finish_catchup"
-        print 'some parsing' + str(log_arr[0]['contents'])
+        print 'some parsing' + str(log_arr[0])
         if len(log_arr) > len(self.my_log):
             print "updated log from: " + str(self.my_log) + " to " + str(log_arr)
             self.my_log = log_arr

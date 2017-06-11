@@ -29,10 +29,36 @@ class CLI:
         self.prm_port = port;
         self.prm_ip = ip;
 
+    # these next three functions are borrowed from stackoverflow. It helps parse large messages
+    def send_msg(self, sock, msg):
+        # Prefix each message with a 4-byte length (network byte order)
+        msg = struct.pack('>I', len(msg)) + msg
+        sock.sendall(msg)
+
+    def recv_msg(self, sock):
+        # Read message length and unpack it into an integer
+        raw_msglen = self.recvall(sock, 4)
+        if not raw_msglen:
+            return None
+        msglen = struct.unpack('>I', raw_msglen)[0]
+        # Read the message data
+        return self.recvall(sock, msglen)
+
+    def recvall(self, sock, n):
+        # Helper function to recv n bytes or return None if EOF is hit
+        data = ''
+        while len(data) < n:
+            packet = sock.recv(n - len(data))
+            if not packet:
+                return None
+            data += packet
+        return data
+
     def connect(self, message, ip, port):
         sendSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sendSocket.connect((ip, port))
-        sendSocket.send(str(message));
+        # sendSocket.send(str(message));
+        self.send_msg(sendSocket, message)
         sendSocket.close();
 
     def handleCommand(self, command):

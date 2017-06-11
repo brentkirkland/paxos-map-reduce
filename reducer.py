@@ -19,6 +19,31 @@ class Reducer:
         if self.logging_switch:
             print 'REDUCER\t(' + str(self.port) + '):\t' + text;
 
+    # these next three functions are borrowed from stackoverflow. It helps parse large messages
+    def send_msg(self, sock, msg):
+        # Prefix each message with a 4-byte length (network byte order)
+        msg = struct.pack('>I', len(msg)) + msg
+        sock.sendall(msg)
+
+    def recv_msg(self, sock):
+        # Read message length and unpack it into an integer
+        raw_msglen = self.recvall(sock, 4)
+        if not raw_msglen:
+            return None
+        msglen = struct.unpack('>I', raw_msglen)[0]
+        # Read the message data
+        return self.recvall(sock, msglen)
+
+    def recvall(self, sock, n):
+        # Helper function to recv n bytes or return None if EOF is hit
+        data = ''
+        while len(data) < n:
+            packet = sock.recv(n - len(data))
+            if not packet:
+                return None
+            data += packet
+        return data
+
     def listen(self):
         sock = socket.socket(socket.AF_INET,
         socket.SOCK_STREAM)
@@ -28,7 +53,8 @@ class Reducer:
         while 1:
             self.log('waiting to accept')
             stream, addr = sock.accept();
-            data = stream.recv(1024);
+            # data = stream.recv(1024);
+            data = self.recv_msg(stream)
             self.log('recieved: ' + str(data))
 
             command = str(data).split()

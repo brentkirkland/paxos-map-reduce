@@ -21,12 +21,12 @@ class Proposer:
 
 
     # these next three functions are borrowed from stackoverflow. It helps parse large messages
-    def send_msg(sock, msg):
+    def send_msg(self, sock, msg):
         # Prefix each message with a 4-byte length (network byte order)
         msg = struct.pack('>I', len(msg)) + msg
         sock.sendall(msg)
 
-    def recv_msg(sock):
+    def recv_msg(self, sock):
         # Read message length and unpack it into an integer
         raw_msglen = recvall(sock, 4)
         if not raw_msglen:
@@ -35,7 +35,7 @@ class Proposer:
         # Read the message data
         return recvall(sock, msglen)
 
-    def recvall(sock, n):
+    def recvall(self, sock, n):
         # Helper function to recv n bytes or return None if EOF is hit
         data = ''
         while len(data) < n:

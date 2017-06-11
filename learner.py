@@ -1,6 +1,7 @@
 import socket
 import ast
 from collections import Counter
+import struct
 
 class Learner:
     def __init__(self, port, ips, ip, pid):

@@ -1,5 +1,6 @@
 import socket
 import os
+import struct
 
 class CLI:
     def __init__(self, pid):

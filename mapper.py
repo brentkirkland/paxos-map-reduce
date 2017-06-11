@@ -2,6 +2,7 @@ import collections
 import string
 import ast
 import socket
+import struct
 
 class Mapper:
     def __init__(self, port, ip, mid):

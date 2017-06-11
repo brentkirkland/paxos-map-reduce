@@ -1,4 +1,5 @@
 import socket
+import struct
 
 class Acceptor:
     def __init__(self, port, ips, ip, pid):

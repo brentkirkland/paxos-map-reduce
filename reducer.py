@@ -2,7 +2,7 @@ from collections import Counter
 import string
 import ast
 import socket
-
+import struct
 
 
 class Reducer:

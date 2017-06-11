@@ -1,4 +1,5 @@
 import socket
+import struct
 
 class Proposer:
     def __init__(self, port, ips, ip, pid):

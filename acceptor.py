@@ -62,14 +62,6 @@ class Acceptor:
             stream, addr = sock.accept();
             # data = stream.recv(1024);
             data = self.recv_msg(stream)
-
-            size = data.split(":!SIZE")[0];
-            current progress;
-
-            while size <
-
-            data = data[1]
-
             self.log('recieved: ' + str(data))
 
             command = data.split();

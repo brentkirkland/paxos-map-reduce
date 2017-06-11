@@ -34,7 +34,7 @@ class Learner:
             return None
         msglen = struct.unpack('>I', raw_msglen)[0]
         # Read the message data
-        return recvall(sock, msglen)
+        return self.recvall(sock, msglen)
 
     def recvall(self, sock, n):
         # Helper function to recv n bytes or return None if EOF is hit

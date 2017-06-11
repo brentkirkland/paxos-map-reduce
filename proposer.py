@@ -19,10 +19,37 @@ class Proposer:
         if self.logging_switch:
             print 'PROPOSER (' + str(self.pid) + ')\t(' + str(self.port) + '):\t' + text;
 
+
+    # these next three functions are borrowed from stackoverflow. It helps parse large messages
+    def send_msg(sock, msg):
+        # Prefix each message with a 4-byte length (network byte order)
+        msg = struct.pack('>I', len(msg)) + msg
+        sock.sendall(msg)
+
+    def recv_msg(sock):
+        # Read message length and unpack it into an integer
+        raw_msglen = recvall(sock, 4)
+        if not raw_msglen:
+            return None
+        msglen = struct.unpack('>I', raw_msglen)[0]
+        # Read the message data
+        return recvall(sock, msglen)
+
+    def recvall(sock, n):
+        # Helper function to recv n bytes or return None if EOF is hit
+        data = ''
+        while len(data) < n:
+            packet = sock.recv(n - len(data))
+            if not packet:
+                return None
+            data += packet
+        return data
+
     def connect(self, message, ip, port):
         sendSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sendSocket.connect((ip, port))
-        sendSocket.send(str(message));
+        # sendSocket.send(str(message));
+        self.send_msg(sendSocket, message)
         sendSocket.close();
 
     def listen(self):
@@ -34,7 +61,8 @@ class Proposer:
         while 1:
             self.log('waiting to accept')
             stream, addr = sock.accept();
-            data = stream.recv(1024);
+            # data = stream.recv(1024);
+            data = self.recv_msg(stream)
             self.log('recieved: ' + str(data))
 
             command = data.split();
@@ -83,7 +111,7 @@ class Proposer:
         #TODO: this will be some bug
         allNone = True
         if len(self.q) == 2:
-            self.log('recieved all three!')
+            self.log('recieved majority!')
             for x in self.v:
                 self.log('X: ' + str(x))
                 if x != "None":

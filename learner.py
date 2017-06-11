@@ -69,7 +69,6 @@ class Learner:
 
             command = data.split("$$$eth$$$")
             if command[0] == "logupdate":
-                print "command 1: " + command[1]
                 self.finish_catchup(eval(command[1]))
                 self.stopped = False
 
@@ -99,7 +98,6 @@ class Learner:
             self.d[b]['has_written'] = True
 
     def catchup(self):
-        print "in catchup"
         #ping all learners and ask for log
         catchup_msg = "catchup " + self.ip + " " + str(self.port)
 
@@ -108,17 +106,14 @@ class Learner:
 
         ##(learners should be listening for this message, when they get it they respond with their log)
     def respond_to_catchup(self, ip, port):
-        print "in respond to catchup"
         catchup_response_msg = "logupdate$$$eth$$$" + str(self.my_log)
         self.connect(catchup_response_msg, ip, int(port))
 
 
     def finish_catchup(self, log_arr):
         #once we hear back from a majority of learners
-        print "got in finish_catchup"
         # print 'some parsing' + str(log_arr)
         if len(log_arr) > len(self.my_log):
-            print "updated log from: " + str(self.my_log) + " to " + str(log_arr)
             self.my_log = log_arr
 
 

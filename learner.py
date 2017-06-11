@@ -70,7 +70,7 @@ class Learner:
             command = data.split("$$$eth$$$")
             if command[0] == "logupdate":
                 print "command 1: " + command[1]
-                self.finish_catchup(list(command[1]))
+                self.finish_catchup(eval(command[1]))
                 self.stopped = False
 
 
@@ -116,6 +116,7 @@ class Learner:
     def finish_catchup(self, log_arr):
         #once we hear back from a majority of learners
         print "got in finish_catchup"
+        print 'some parsing' + str(log_arr[0]['contents'])
         if len(log_arr) > len(self.my_log):
             print "updated log from: " + str(self.my_log) + " to " + str(log_arr)
             self.my_log = log_arr

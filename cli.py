@@ -68,28 +68,35 @@ class CLI:
             if len(command) != 2:
                 print 'argument required.'
             else:
+                try:
+                    with open(command[1]) as f:
+                        content = f.read()
+                    content = [x.strip() for x in content]
 
-                with open(command[1]) as f:
-                    content = f.read()
-                content = [x.strip() for x in content]
+                    middle = int(len(content)/2)
 
-                middle = int(len(content)/2)
+                    while(content[middle] != ' ' and content[middle] != ''):
+                        middle -= 1;
 
-                while(content[middle] != ' ' and content[middle] != ''):
-                    middle -= 1;
+                    firstmessage = "map " + command[1] + " 0 " + str(middle)
+                    secondmessage = "map " + command[1] + " " + str(middle + 1) + " " + str(len(content) - middle - 1)
 
-                firstmessage = "map " + command[1] + " 0 " + str(middle)
-                secondmessage = "map " + command[1] + " " + str(middle + 1) + " " + str(len(content) - middle - 1)
-
-                self.connect(firstmessage, self.m1_ip, self.m1_port);
-                self.connect(secondmessage, self.m2_ip, self.m2_port)
+                    self.connect(firstmessage, self.m1_ip, self.m1_port);
+                    self.connect(secondmessage, self.m2_ip, self.m2_port)
+                except IOError:
+                    print "Error: File does not appear to exist."
 
         if command[0] == "reduce":
             if len(command) < 3:
                 print 'minimum 2 arguments required'
             else:
-                self.log('reducing...')
-                self.connect(" ".join(command), self.r_ip, self.r_port)
+                try:
+                    open(command[1], "r")
+                    open(command[2], "r")
+                    self.log('reducing...')
+                    self.connect(" ".join(command), self.r_ip, self.r_port)
+                except IOError:
+                    print "Error: File does not appear to exist."
 
         if command[0] == "replicate":
             if len(command) != 2:

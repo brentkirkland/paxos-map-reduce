@@ -6,6 +6,7 @@ class CLI:
     def __init__(self, pid):
         self.pid = pid
         self.logging_switch = True
+        self.stop = False;
 
     def logging(self, switch):
         self.logging_switch = switch
@@ -120,6 +121,7 @@ class CLI:
 
 
         if command[0] == "stop":
+            self.stop == True;
             self.log('stopping...')
 
             # TODO: // FIX FOR MULTIPLE NODES / GOOGLE
@@ -130,6 +132,8 @@ class CLI:
         if command[0] == "resume":
             self.log('resuming...')
 
-            self.connect("resume", self.prm_ip, self.prm_port)
-            self.connect("resume", self.prm_ip, self.prm_port + 1)
-            self.connect("resume", self.prm_ip, self.prm_port + 2)
+            if self.stop:
+                self.connect("resume", self.prm_ip, self.prm_port)
+                self.connect("resume", self.prm_ip, self.prm_port + 1)
+                self.connect("resume", self.prm_ip, self.prm_port + 2)
+            self.stop = False;

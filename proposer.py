@@ -82,7 +82,7 @@ class Proposer:
                     try:
                         self.handleMajority(command)
                     except Exception as e:
-                        raise
+                        print e;
 
             if command[0] == "resume":
                 self.stopped = False

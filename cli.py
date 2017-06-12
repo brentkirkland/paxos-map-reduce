@@ -121,7 +121,7 @@ class CLI:
 
 
         if command[0] == "stop":
-            self.stop == True;
+            self.stop = True;
             self.log('stopping...')
 
             # TODO: // FIX FOR MULTIPLE NODES / GOOGLE

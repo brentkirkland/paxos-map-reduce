@@ -169,15 +169,18 @@ class Learner:
             print log['filename']
 
     def merge(self, commands):
-        str_contents_one = self.my_log[int(commands[1])]['contents']
-        str_contents_two = self.my_log[int(commands[2])]['contents']
+        try:
+            str_contents_one = self.my_log[int(commands[1])]['contents']
+            str_contents_two = self.my_log[int(commands[2])]['contents']
 
-        c1 = Counter(ast.literal_eval(str_contents_one));
-        c2 = Counter(ast.literal_eval(str_contents_two));
+            c1 = Counter(ast.literal_eval(str_contents_one));
+            c2 = Counter(ast.literal_eval(str_contents_two));
 
-        c = c1 + c2;
+            c = c1 + c2;
 
-        print dict(c)
+            print dict(c)
+        except IndexError:
+            print 'index out of range'
 
 
     def total(self, commands):

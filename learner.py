@@ -157,6 +157,10 @@ class Learner:
             'contents': val['contents']
         }
 
+        f = open(str(val['filename']),"w")
+        f.write(val['contents'])
+        f.close()
+
         self.my_log.append(loggy)
 
     def print_logs(self):

@@ -182,11 +182,15 @@ class Learner:
 
     def total(self, commands):
         b = Counter();
+
         for x in range(1, len(commands)):
-            command = int(commands[x])
-            str_contents = self.my_log[command]['contents']
-            c = Counter(ast.literal_eval(str_contents));
-            b = b + c;
+            try:
+                command = int(commands[x])
+                str_contents = self.my_log[command]['contents']
+                c = Counter(ast.literal_eval(str_contents));
+                b = b + c;
+            except IndexError:
+                print 'index out of range'
 
         s = sum(b.values());
 

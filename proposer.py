@@ -79,7 +79,10 @@ class Proposer:
                 else:
                     command = data.split("$$$eth$$$");
                     #self.log(str(command))
-                    self.handleMajority(command)
+                    try:
+                        self.handleMajority(command)
+                    except Exception as e:
+                        raise
 
             if command[0] == "resume":
                 self.stopped = False

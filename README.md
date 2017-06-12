@@ -3,7 +3,9 @@
 Ishi von Meier - 6776587
 Brent Kirkland - 6365829
 
-Note: This program runs from a single machine.
+## Config.txt
+
+The config file contains the ip address of each machine. Replace each ip with `127.0.0.1` if you would like to test it locally.
 
 ## How to run:
 
@@ -32,7 +34,3 @@ You then enter commands into each terminal. Sorry if the formatting may be wonky
 * total
 * print
 * merge
-
-## TODO
-
-Generalize to more than 3 nodes. Setup config file to work on data center.

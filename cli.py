@@ -95,7 +95,11 @@ class CLI:
                 print 'argument required'
             else:
                 self.log('replicating...')
-                self.connect(" ".join(command), self.prm_ip, self.prm_port)
+                try:
+                    open(command[1], "r")
+                    self.connect(" ".join(command), self.prm_ip, self.prm_port)
+                except IOError:
+                    print "Error: File does not appear to exist."
 
         if command[0] == "total":
             if len(command) < 3:
